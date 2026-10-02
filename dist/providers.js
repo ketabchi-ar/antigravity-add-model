@@ -5,6 +5,7 @@ exports.getProvider = getProvider;
 exports.resolveApiFormat = resolveApiFormat;
 const preset = (id, label, defaultUrl, apiFormat = 'openai', keyRequired = true) => ({ id, label, defaultUrl, apiFormat, keyRequired });
 exports.PROVIDERS = [
+    preset('9router', '9Router (Local AI Gateway)', 'http://127.0.0.1:20128/v1/chat/completions', 'openai', false),
     preset('openai', 'OpenAI', 'https://api.openai.com/v1/chat/completions'),
     preset('anthropic', 'Anthropic', 'https://api.anthropic.com/v1/messages', 'anthropic'),
     preset('google', 'Google Gemini', 'https://generativelanguage.googleapis.com/v1beta', 'google'),

@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "name": "models/9router-claude-3-5-sonnet",
+      "displayName": "Claude 3.5 Sonnet (via 9Router)",
+      "description": "Anthropic Claude 3.5 Sonnet routed via local 9Router gateway",
+      "provider": "9router",
+      "apiFormat": "openai",
+      "apiUrl": "http://127.0.0.1:20128/v1/chat/completions",
+      "externalModelName": "claude-3-5-sonnet",
+      "enabled": true,
+      "contextWindow": 200000,
+      "maxOutputTokens": 8192,
+      "timeout": 180000,
+      "supportsVision": true
+    },
+    {
+      "name": "models/9router-gpt-4o",
+      "displayName": "GPT-4o (via 9Router)",
+      "description": "OpenAI GPT-4o routed via local 9Router gateway",
+      "provider": "9router",
+      "apiFormat": "openai",
+      "apiUrl": "http://127.0.0.1:20128/v1/chat/completions",
+      "externalModelName": "gpt-4o",
+      "enabled": true,
+      "contextWindow": 128000,
+      "maxOutputTokens": 4096,
+      "timeout": 180000,
+      "supportsVision": true
+    },
+    {
+      "name": "models/9router-deepseek-v3",
+      "displayName": "DeepSeek V3 (via 9Router)",
+      "description": "DeepSeek V3 reasoning & coding routed via local 9Router gateway",
+      "provider": "9router",
+      "apiFormat": "openai",
+      "apiUrl": "http://127.0.0.1:20128/v1/chat/completions",
+      "externalModelName": "deepseek-chat",
+      "enabled": true,
+      "contextWindow": 64000,
+      "maxOutputTokens": 8192,
+      "timeout": 180000
+    },
+    {
+      "name": "models/9router-gemini-flash",
+      "displayName": "Gemini 2.5 Flash (via 9Router)",
+      "description": "Fast multi-modal Gemini routed via local 9Router gateway",
+      "provider": "9router",
+      "apiFormat": "openai",
+      "apiUrl": "http://127.0.0.1:20128/v1/chat/completions",
+      "externalModelName": "gemini-2.5-flash",
+      "enabled": true,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 8192,
+      "timeout": 120000,
+      "supportsVision": true
+    }
+  ]
+}

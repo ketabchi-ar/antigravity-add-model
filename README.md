@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="gateway/dashboard/antigravity-logo.png" width="96" height="96" alt="Google Antigravity logo">
+  <img src="assets/banner.svg" width="100%" alt="Antigravity Custom Model Enabler Banner">
 </p>
 
 <h1 align="center">Antigravity Custom Model Enabler</h1>
@@ -10,17 +10,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/vahapogut/antigravity-add-model/actions/workflows/ci.yml"><img src="https://github.com/vahapogut/antigravity-add-model/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
-  <a href="#installation"><img src="https://img.shields.io/badge/Node.js-22.13%2B-339933?logo=nodedotjs&logoColor=white" alt="Node.js 22.13 or newer"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-2563eb" alt="Apache License 2.0"></a>
-</p>
-
-<p align="center">
+  <a href="README.fa.md"><strong>🇮🇷 راهنمای کامل فارسی (Persian Docs)</strong></a> ·
   <a href="#installation"><strong>Quick start</strong></a> ·
   <a href="#quick-links">Quick links</a> ·
   <a href="#screenshots">Screenshots</a> ·
-  <a href="#documentation">Documentation</a> ·
-  <a href="https://github.com/vahapogut/antigravity-add-model/issues/new">Report an issue</a>
+  <a href="#documentation">Documentation</a>
 </p>
 
 ---
