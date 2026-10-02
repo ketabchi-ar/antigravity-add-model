@@ -19,7 +19,9 @@ node "$SCRIPT_DIR/scripts/deploy.mjs" "$@"
 
 echo "==> Re-opening Antigravity..."
 if [ -d "/Applications/Antigravity.app" ]; then
-  open -a Antigravity || true
+  open "/Applications/Antigravity.app" || true
+elif [ -d "$HOME/Applications/Antigravity.app" ]; then
+  open "$HOME/Applications/Antigravity.app" || true
 fi
 
 echo "==> Done! Patch applied successfully."
