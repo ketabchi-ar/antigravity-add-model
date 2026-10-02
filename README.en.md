@@ -10,9 +10,9 @@
 
 <p align="center">
   <a href="README.md"><strong>🇮🇷 راهنمای فارسی (Persian Documentation)</strong></a> ·
-  <a href="#quick-installation">Quick start</a> ·
-  <a href="#how-installsh-works">How it works</a> ·
+  <a href="#quick-installation-all-os">Quick start (All OS)</a> ·
   <a href="#connecting-to-9router">9Router Setup</a> ·
+  <a href="#fetch-models-automatically">Fetch Models</a> ·
   <a href="#rollback-and-uninstall">Rollback</a>
 </p>
 
@@ -20,7 +20,7 @@
 
 ## What does `install.sh` do?
 
-When you run the unified installer, it automatically handles:
+When you run the installer, it automatically handles:
 1. **Pre-flight Checks:** Verifies Node.js (22.13+), Git, Antigravity Desktop app, and local 9Router status.
 2. **Project Compilation:** Installs dependencies and compiles TypeScript source code cleanly.
 3. **Safe Application Shutdown:** Closes running Antigravity instances to prevent macOS / Windows file-lock issues.
@@ -29,17 +29,23 @@ When you run the unified installer, it automatically handles:
 
 ---
 
-## Quick Installation
+## Quick Installation (All OS)
 
-Run this single command in your terminal:
-
+Clone the repository:
 ```bash
 git clone https://github.com/ketabchi-ar/antigravity-add-model.git
 cd antigravity-add-model
+```
+
+### macOS & Linux
+```bash
 bash install.sh
 ```
 
-*(On Windows, execute `.\deploy.ps1` in PowerShell).*
+### Windows (PowerShell)
+```powershell
+.\deploy.ps1
+```
 
 ---
 
@@ -48,23 +54,39 @@ bash install.sh
 1. Open Antigravity, go to **Settings → Models & Usage**.
 2. Under the new **Custom Models** section, click **Add model**.
 3. Select **9Router (Local AI Gateway)** from the Provider list:
-   * The endpoint `http://127.0.0.1:20128/v1/chat/completions` is automatically populated.
-4. **API Key:** Open `http://127.0.0.1:20128/dashboard/endpoint` in your browser, copy your key, and paste it into the **API Key** field.
-5. Enter your **Model ID** (e.g. `claude-3-5-sonnet`, `gpt-4o`, `deepseek-chat`).
-6. Click **Test connection** (green checkmark confirms ready status), then click **Save model**.
+   * The endpoint `http://127.0.0.1:20128/v1/chat/completions` is automatically filled.
+   * Format defaults to `OpenAI compatible`.
+4. **Get API Key:** Open `http://127.0.0.1:20128/dashboard/endpoint` in your browser, copy your key, and paste it into the **API key** field.
 
 <p align="center">
-  <img src="assets/add_custom_model_modal.png" width="420" alt="Add Model Modal">
+  <img src="assets/add_custom_model_modal.png" width="450" alt="Add Model Modal">
+</p>
+
+---
+
+## Fetch Models Automatically (No Manual Typing)
+
+1. Click **Test connection** (a green checkmark confirms authentication with 9Router).
+2. Click **Fetch provider models**:
+   * Antigravity directly queries 9Router and lists all configured active models (Claude 3.5 Sonnet, GPT-4o, DeepSeek, etc.).
+3. Check the models you want to use.
+4. Click **Add selected** at the bottom of the list.
+
+<p align="center">
   <img src="assets/custom_models_dashboard.png" width="850" alt="Custom Models Dashboard">
 </p>
 
-Now choose your custom model from the chat dropdown and enjoy unlimited coding without vendor lock-in!
+Now switch back to chat, open the model picker dropdown, and select your custom models!
+
+<p align="center">
+  <img src="assets/chat_model_dropdown.png" width="700" alt="Chat model dropdown">
+</p>
 
 ---
 
 ## Rollback and Uninstall
 
-To restore the clean official Google binary and remove the patch:
+To restore the official Google runtime without re-installing:
 
 ```bash
 cd antigravity-add-model
