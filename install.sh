@@ -84,6 +84,38 @@ else
   echo -e "${YELLOW}○ خاموش یا در دسترس نیست (بعداً در صورت نیاز روشن کنید)${NC}"
 fi
 
+# 6. Check Proxy / VPN for Google OAuth & Cloud Code
+echo -e "${CYAN}💡 راهنمایی: برای عبور بدون مشکل از تحریم گوگل، فیلترشکن خود (Clash, v2ray, NekoBox و ...) را روشن نگه دارید.${NC}"
+echo -ne "🔍 بررسی خودکار درگاه‌های پروکسی سیستم... "
+DETECTED_PROXY=$(node -e '
+const net = require("net");
+const ports = [7890, 10809, 2081, 10808];
+(async () => {
+  for (const p of ports) {
+    const ok = await new Promise(r => {
+      const s = new net.Socket();
+      s.setTimeout(250);
+      s.on("connect", () => { s.destroy(); r(true); });
+      s.on("timeout", () => { s.destroy(); r(false); });
+      s.on("error", () => { s.destroy(); r(false); });
+      s.connect(p, "127.0.0.1");
+    });
+    if (ok) { console.log("http://127.0.0.1:" + p); process.exit(0); }
+  }
+})();
+' 2>/dev/null || true)
+
+if [ -n "$DETECTED_PROXY" ]; then
+  PROXY_PORT=$(echo "$DETECTED_PROXY" | cut -d':' -f3)
+  echo -e "${GREEN}✓ فیلترشکن روی پورت $PROXY_PORT شناسایی شد (دور زدن تحریم فعال است)${NC}"
+  export HTTPS_PROXY="$DETECTED_PROXY"
+  export HTTP_PROXY="$DETECTED_PROXY"
+elif [ -n "${HTTPS_PROXY:-}" ] || [ -n "${ALL_PROXY:-}" ]; then
+  echo -e "${GREEN}✓ پروکسی از متغیرهای محیطی سیستم تنظیم شده است${NC}"
+else
+  echo -e "${YELLOW}○ فیلترشکن محلی باز یافت نشد (در صورت نیاز به لاگین گوگل، VPN/TUN را روشن کنید)${NC}"
+fi
+
 # Summary check
 if [ "$FAILURES" -gt 0 ]; then
   echo -e "\n${RED}❌ برخی پیش‌نیازهای ضروری آماده نیستند. لطفاً موارد قرمز را رفع کنید.${NC}"

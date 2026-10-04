@@ -2,6 +2,7 @@
 import * as http from 'node:http';
 import * as https from 'node:https';
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
+import { getProxyAgent } from './proxy/proxyAgent';
 
 export const GOOGLE_AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 export const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
@@ -57,6 +58,7 @@ function exchangeToken(parameters: URLSearchParams, signal: AbortSignal): Promis
       GOOGLE_TOKEN_URL,
       {
         method: 'POST',
+        agent: getProxyAgent(),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(body),

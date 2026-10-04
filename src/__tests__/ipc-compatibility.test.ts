@@ -110,6 +110,7 @@ function createFixture(customOnly = false) {
     './customScheme': { extensionAuthorities: new Map() },
     './tray': {},
     './ideInstall/constants': { getIdeInstallPath: () => idePath },
+    './proxy/proxyAgent': { detectLocalProxy: vi.fn().mockResolvedValue(undefined), getProxyAgent: vi.fn() },
   };
   const updater = loadModule('updater', dependencies);
   const customIpc = loadModule('customIpc', dependencies);
@@ -266,6 +267,7 @@ describe('standalone custom model addon', () => {
       'storage:google-login-cancel',
       'storage:google-test-account',
       'storage:google-pool-status',
+      'storage:get-proxy-status',
     ]);
     expect(fixture.exposed).toEqual({});
   });

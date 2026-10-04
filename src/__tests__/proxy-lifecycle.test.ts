@@ -84,6 +84,7 @@ function fixture(fixed = true) {
     './proxy/customRequest': { stopCustomRequests: vi.fn(), getProxyMetrics: () => ({ requests: 0 }) },
     './modelStore': {},
     './cryptoStore': {},
+    './proxy/proxyAgent': { detectLocalProxy: vi.fn().mockResolvedValue(undefined), getProxyAgent: vi.fn() },
     // These are the production marker parser and listener, with only the socket mocked.
     './proxy/listen': { getRequiredProxyPort, listenProxy },
   };

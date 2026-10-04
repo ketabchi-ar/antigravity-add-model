@@ -93,6 +93,7 @@ import { detectModelCapabilities } from './proxy/modelUtils';
 import { runCustomModelRequest, getProxyMetrics, stopCustomRequests } from './proxy/customRequest';
 import { readModelConfig, writeJsonAtomic } from './modelStore';
 import { getRequiredProxyPort, listenProxy } from './proxy/listen';
+import { getProxyAgent } from './proxy/proxyAgent';
 
 // Dynamic imports (stays require for Electron-specific modules)
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -300,6 +301,7 @@ function proxyToGoogle(req: http.IncomingMessage, res: http.ServerResponse, reqB
   const options: https.RequestOptions = {
     method: req.method,
     headers: headers as Record<string, string>,
+    agent: getProxyAgent(),
   };
 
   const proxyReq = https.request(parsedUrl, options, (proxyRes) => {

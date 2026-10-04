@@ -63,6 +63,7 @@ const modelUtils_1 = require("./proxy/modelUtils");
 const customRequest_1 = require("./proxy/customRequest");
 const modelStore_1 = require("./modelStore");
 const listen_1 = require("./proxy/listen");
+const proxyAgent_1 = require("./proxy/proxyAgent");
 // Dynamic imports (stays require for Electron-specific modules)
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cryptoStore = require('./cryptoStore');
@@ -254,6 +255,7 @@ function proxyToGoogle(req, res, reqBody) {
     const options = {
         method: req.method,
         headers: headers,
+        agent: (0, proxyAgent_1.getProxyAgent)(),
     };
     const proxyReq = https.request(parsedUrl, options, (proxyRes) => {
         // P0-5: Timeout for Google proxy requests (60s)

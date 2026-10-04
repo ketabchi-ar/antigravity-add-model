@@ -39,6 +39,7 @@ exports.loginGoogleAccount = loginGoogleAccount;
 const http = __importStar(require("node:http"));
 const https = __importStar(require("node:https"));
 const node_crypto_1 = require("node:crypto");
+const proxyAgent_1 = require("./proxy/proxyAgent");
 exports.GOOGLE_AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 exports.GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const SCOPES = 'https://www.googleapis.com/auth/cloud-platform';
@@ -65,6 +66,7 @@ function exchangeToken(parameters, signal) {
         };
         const req = https.request(exports.GOOGLE_TOKEN_URL, {
             method: 'POST',
+            agent: (0, proxyAgent_1.getProxyAgent)(),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Length': Buffer.byteLength(body),

@@ -2,6 +2,7 @@
 import * as http from 'http';
 import * as https from 'https';
 import { createHash } from 'crypto';
+import { getProxyAgent } from './proxy/proxyAgent';
 
 export interface GoogleAccount {
   id: string;
@@ -106,9 +107,14 @@ async function postJson(
   body: string,
 ): Promise<{ status: number; data: Record<string, unknown> }> {
   return new Promise((resolve, reject) => {
-    const request = (url.protocol === 'https:' ? https : http).request(
+    const isHttps = url.protocol === 'https:';
+    const request = (isHttps ? https : http).request(
       url,
-      { method: 'POST', headers: { ...headers, 'Content-Length': Buffer.byteLength(body) } },
+      {
+        method: 'POST',
+        headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
+        ...(isHttps ? { agent: getProxyAgent() } : {}),
+      },
       (response) => {
         let bytes = 0;
         const chunks: Buffer[] = [];

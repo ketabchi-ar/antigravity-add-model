@@ -45,6 +45,7 @@ exports.resetGoogleAccountState = resetGoogleAccountState;
 const http = __importStar(require("http"));
 const https = __importStar(require("https"));
 const crypto_1 = require("crypto");
+const proxyAgent_1 = require("./proxy/proxyAgent");
 class GoogleAccountError extends Error {
     constructor(message, status = 503) {
         super(message);
@@ -99,7 +100,12 @@ function checkedEndpoint(value, hosts) {
 }
 async function postJson(url, headers, body) {
     return new Promise((resolve, reject) => {
-        const request = (url.protocol === 'https:' ? https : http).request(url, { method: 'POST', headers: { ...headers, 'Content-Length': Buffer.byteLength(body) } }, (response) => {
+        const isHttps = url.protocol === 'https:';
+        const request = (isHttps ? https : http).request(url, {
+            method: 'POST',
+            headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
+            ...(isHttps ? { agent: (0, proxyAgent_1.getProxyAgent)() } : {}),
+        }, (response) => {
             let bytes = 0;
             const chunks = [];
             response.on('data', (chunk) => {

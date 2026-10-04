@@ -222,6 +222,10 @@ window.addEventListener('DOMContentLoaded', () => {
       .agy-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.agy-discovery{max-height:240px;overflow:auto;margin:12px 0}
       .agy-choice{display:flex;gap:10px;align-items:center;padding:7px 0;overflow-wrap:anywhere;unicode-bidi:plaintext;text-align:start}.agy-choice span{min-width:0}
       #agy-modal-overlay details{border:1px solid #303036;border-radius:8px;margin:12px 0;padding:12px}#agy-modal-overlay summary{cursor:pointer;margin-bottom:10px;font-weight:500;unicode-bidi:plaintext;text-align:start}
+      .agy-proxy-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:500;border:1px solid #303036;background:#202024;user-select:none}
+      .agy-proxy-pill.active{border-color:#22c55e55;color:#86efac;background:#052e1666}
+      .agy-proxy-pill.direct{border-color:#71717a55;color:#a1a1aa;background:#27272a55}
+      .agy-dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
       @media(max-width:600px){.agy-grid{grid-template-columns:1fr}#agy-modal-card{padding:16px}.agy-row .agy-actions{width:100%}}
     `;
     document.head.append(style);
@@ -1442,10 +1446,36 @@ window.addEventListener('DOMContentLoaded', () => {
     section.id = 'agy-custom-models-section';
     section.setAttribute('aria-label', 'Custom Models');
     const header = element('div', 'agy-toolbar');
+    const titleBox = element('div', 'agy-toolbar');
+    titleBox.style.margin = '0';
+    titleBox.append(element('h2', '', 'Custom Models'));
+
+    const proxyBadge = element('div', 'agy-proxy-pill direct');
+    proxyBadge.innerHTML = '<span class="agy-dot"></span><span>Checking proxy...</span>';
+    titleBox.append(proxyBadge);
+
     header.append(
-      element('h2', '', 'Custom Models'),
+      titleBox,
       button('Add model', () => openModelModal(), undefined, true),
     );
+
+    void (async () => {
+      try {
+        const res = (await ipcRenderer.invoke('storage:get-proxy-status')) as { proxy?: string };
+        if (res?.proxy) {
+          const port = res.proxy.split(':').pop();
+          proxyBadge.className = 'agy-proxy-pill active';
+          proxyBadge.innerHTML = `<span class="agy-dot"></span><span>Bypass Active (${port})</span>`;
+          proxyBadge.title = `Google bypass proxy active: ${res.proxy}`;
+        } else {
+          proxyBadge.className = 'agy-proxy-pill direct';
+          proxyBadge.innerHTML = '<span class="agy-dot"></span><span>Direct (No Proxy)</span>';
+          proxyBadge.title = 'No active proxy detected';
+        }
+      } catch {
+        proxyBadge.remove();
+      }
+    })();
     const actions = element('div', 'agy-actions');
     actions.append(
       button('Discover local', discoverLocal),
