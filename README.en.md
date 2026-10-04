@@ -22,10 +22,11 @@
 
 When you run the installer, it automatically handles:
 1. **Pre-flight Checks:** Verifies Node.js (22.13+), Git, Antigravity Desktop app, and local 9Router status.
-2. **Project Compilation:** Installs dependencies and compiles TypeScript source code cleanly.
-3. **Safe Application Shutdown:** Closes running Antigravity instances to prevent macOS / Windows file-lock issues.
-4. **App Patching:** Injects the protocol translator and model management interface into Antigravity.
-5. **Auto-Relaunch:** Restarts Antigravity ready with custom model features.
+2. **Auto-Proxy & Google Bypass Detection:** Automatically probes common local proxy ports (`7890`, `10809`, `2081`, `10808` from Clash, v2rayN, NekoBox) to tunnel Google OAuth token exchange and Cloud Code requests seamlessly.
+3. **Project Compilation:** Installs dependencies and compiles TypeScript source code cleanly.
+4. **Safe Application Shutdown:** Closes running Antigravity instances to prevent macOS / Windows file-lock issues.
+5. **App Patching:** Injects the protocol translator, in-app Google login window, proxy status indicator badge, and custom model management interface into Antigravity.
+6. **Auto-Relaunch:** Restarts Antigravity ready with custom model features.
 
 ---
 
