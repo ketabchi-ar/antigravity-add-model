@@ -710,8 +710,8 @@ function handleRequest(req, res) {
                 headers: fwdHeaders,
             };
             const googleReq = https.request(parsedUrl, fwdOptions, (googleRes) => {
-                // P0-5: Timeout for fetchAvailableModels forward request (30s)
-                googleReq.setTimeout(30000, () => {
+                // P0-5: Timeout for fetchAvailableModels forward request (5s in restricted regions)
+                googleReq.setTimeout(5000, () => {
                     electron_log_1.default.error('[Proxy] fetchAvailableModels forward request timed out');
                     googleReq.destroy();
                     if (!res.headersSent) {
@@ -934,8 +934,8 @@ function handleRequest(req, res) {
             delete mdlHeaders['accept-encoding'];
             const mdlOptions = { method: 'GET', headers: mdlHeaders };
             const googleReq = https.request(parsedUrl, mdlOptions, (googleRes) => {
-                // P0-5: Timeout for models list forward request (30s)
-                googleReq.setTimeout(30000, () => {
+                // P0-5: Timeout for models list forward request (5s)
+                googleReq.setTimeout(5000, () => {
                     electron_log_1.default.error('[Proxy] Models list forward request timed out');
                     googleReq.destroy();
                     if (!res.headersSent) {

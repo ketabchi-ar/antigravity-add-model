@@ -87,6 +87,11 @@ function backupFile(filePath) {
  * Checks if Electron's safeStorage API is fully functional on the current system.
  */
 function isEncryptionAvailable() {
+    // On macOS ad-hoc signed Electron builds, safeStorage triggers native OS Keychain prompts
+    // and synchronously blocks the main thread. Prefer silent AES-256-GCM local storage in production.
+    if (typeof process !== 'undefined' && process.platform === 'darwin' && !process.env.VITEST) {
+        return false;
+    }
     try {
         return !!(safeStorage && safeStorage.isEncryptionAvailable());
     }
